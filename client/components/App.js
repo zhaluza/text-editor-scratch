@@ -1,7 +1,8 @@
 import React from 'react';
+import TextBox from './TextBox';
 
 const App = props => {
-  return <h1>I'm an app man.</h1>;
+  return <TextBox />;
 };
 
 export default App;
