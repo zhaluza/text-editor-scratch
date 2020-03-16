@@ -22,10 +22,10 @@ class TextBox extends Component {
   }
 
   updateCodeinState(text) {
+    this.setState({ code: text }, () => console.log(this.state.code));
     socket.emit('coding', {
       newCode: text
     });
-    this.setState({ code: text }, () => console.log(this.state.code));
   }
   render() {
     return (
