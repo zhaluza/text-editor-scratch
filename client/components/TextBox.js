@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 const io = require('socket.io-client');
-const socket = io('localhost:3000', {
-  secure: true,
-  rejectUnauthorized: false
-});
+const socket = io('localhost:3000');
 
 class TextBox extends Component {
   constructor(props) {
@@ -20,7 +17,6 @@ class TextBox extends Component {
   }
 
   updateCodeFromSockets(payload) {
-    console.log('what');
     this.setState({ code: payload.newCode });
   }
 
@@ -33,7 +29,7 @@ class TextBox extends Component {
   }
   render() {
     socket.on('code sent', payload => {
-      console.log(`client received code from server: ${payload}`);
+      console.log(`client received code from server: ${payload.newCode}`);
       this.updateCodeFromSockets(payload);
     });
     return (

@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import TextBox from './TextBox';
 const io = require('socket.io-client');
-const socket = io('localhost:3000', {
-  secure: true,
-  rejectUnauthorized: false
-});
+const socket = io('localhost:3000');
 
 class Room extends Component {
   constructor(props) {

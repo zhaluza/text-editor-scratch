@@ -19,8 +19,10 @@ io.on('connection', socket => {
 
   // Join room when 'room' event is emitted
   socket.on('room', data => {
-    socket.join(data.room);
-    console.log(`User ${socket.id} joined room ${data.room}`);
+    socket.join('some room', err => {
+      if (err) console.error(err);
+    });
+    console.log(`User ${socket.id} joined room ${'some room'}`);
     console.log(io.sockets.adapter.rooms);
   });
 
@@ -35,7 +37,7 @@ io.on('connection', socket => {
   // handle coding event
   socket.on('coding', data => {
     console.log('received coding data: ', data);
-    socket.broadcast.to(data.room).emit('code sent', data);
+    io.to('some room').emit('code sent', data);
   });
 });
 
