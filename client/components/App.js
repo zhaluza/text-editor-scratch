@@ -1,8 +1,8 @@
 import React from 'react';
-import TextBox from './TextBox';
+import Room from './Room';
 
 const App = props => {
-  return <TextBox />;
+  return <Room />;
 };
 
 export default App;

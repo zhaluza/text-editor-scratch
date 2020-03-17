@@ -13,15 +13,29 @@ const io = socket(server);
 
 // test for connection
 io.on('connection', socket => {
-  console.log('user', socket.id);
   socket.on('disconnect', () => {
     console.log('user disconnected', socket.id);
   });
 
+  // Join room when 'room' event is emitted
+  socket.on('room', data => {
+    socket.join(data.room);
+    console.log(`User ${socket.id} joined room ${data.room}`);
+    console.log(io.sockets.adapter.rooms);
+  });
+
+  // handle leave room event when user switches room
+  socket.on('leave room', data => {
+    socket.leave(data.room, err => {
+      if (err) console.error(err);
+      console.log(`User ${socket.id} left ${data.room}`);
+    });
+  });
+
   // handle coding event
   socket.on('coding', data => {
-    console.log(data);
-    socket.broadcast.emit('receive code', data);
+    console.log('received coding data: ', data);
+    socket.broadcast.to('roomba').emit('code sent', data);
   });
 });
 

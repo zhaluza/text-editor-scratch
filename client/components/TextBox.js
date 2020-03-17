@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 const io = require('socket.io-client');
-const socket = io('localhost:3000');
-// socket.emit('coding', { newCode: 'hello' });
+const socket = io('localhost:3000', {
+  secure: true,
+  rejectUnauthorized: false
+});
 
 class TextBox extends Component {
   constructor(props) {
@@ -9,25 +11,31 @@ class TextBox extends Component {
     this.state = {
       code: ''
     };
-    socket.on('receive code', payload => {
-      console.log('received code');
-      this.updateCodeFromSockets(payload);
-    });
+    // socket.on('receive code', payload => {
+    //   console.log('received code');
+    //   this.updateCodeFromSockets(payload);
+    // });
     this.updateCodeinState = this.updateCodeinState.bind(this);
     this.updateCodeFromSockets = this.updateCodeFromSockets.bind(this);
   }
 
   updateCodeFromSockets(payload) {
+    console.log('what');
     this.setState({ code: payload.newCode });
   }
 
   updateCodeinState(text) {
     this.setState({ code: text }, () => console.log(this.state.code));
     socket.emit('coding', {
+      room: this.props.room,
       newCode: text
     });
   }
   render() {
+    socket.on('code sent', payload => {
+      console.log(`client received code from server: ${payload}`);
+      this.updateCodeFromSockets(payload);
+    });
     return (
       <textarea
         value={this.state.code}
