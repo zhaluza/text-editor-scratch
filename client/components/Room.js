@@ -10,7 +10,7 @@ class Room extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      room: 'lkjer9029083',
+      room: 'roomba',
       prevRoom: null
     };
     // this.handleSwitchRoom = this.handleSwitchRoom.bind(this);

@@ -35,7 +35,7 @@ io.on('connection', socket => {
   // handle coding event
   socket.on('coding', data => {
     console.log('received coding data: ', data);
-    socket.broadcast.to('roomba').emit('code sent', data);
+    socket.broadcast.to(data.room).emit('code sent', data);
   });
 });
 
