@@ -19,31 +19,31 @@ io.on('connection', socket => {
 
   // Join room when 'room' event is emitted
   socket.on('room', data => {
-    socket.join('some room', err => {
+    socket.join(data.room, err => {
       if (err) console.error(err);
     });
     console.log(`User ${socket.id} joined room ${'some room'}`);
     console.log(io.sockets.adapter.rooms);
   });
 
-  // handle leave room event when user switches room
-  socket.on('leave room', data => {
-    socket.leave(data.room, err => {
-      if (err) console.error(err);
-      console.log(`User ${socket.id} left ${data.room}`);
-    });
-  });
+  // TODO: Handle leave room event when user switches room
+  // socket.on('leave room', data => {
+  //   socket.leave(data.room, err => {
+  //     if (err) console.error(err);
+  //     console.log(`User ${socket.id} left ${data.room}`);
+  //   });
+  // });
 
   // handle coding event
   socket.on('coding', data => {
     console.log('received coding data: ', data);
-    io.to('some room').emit('code sent', data);
+    io.to(data.room).emit('code sent', data);
   });
 });
 
 // Handle parsing request body
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Handle requests for client files
 app.use(express.static(path.resolve(__dirname, '../client')));

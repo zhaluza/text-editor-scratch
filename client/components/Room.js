@@ -1,46 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TextBox from './TextBox';
-const io = require('socket.io-client');
-const socket = io('localhost:3000');
 
-class Room extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      room: 'roomba',
-      prevRoom: null
-    };
-    // this.handleSwitchRoom = this.handleSwitchRoom.bind(this);
-  }
-  // emit room on component mounting
-  componentDidMount() {
-    socket.emit('room', { room: this.state.room });
-  }
-  // Switch rooms when user changes rooms
-  //   handleSwitchRoom() {
-  //     this.setState(
-  //       { room: this.state.room + 1, prevRoom: this.state.room },
-  //       () => {
-  //         socket.emit('leave room', {
-  //           room: this.state.prevRoom
-  //         });
-  //         socket.emit('room', { room: this.state.room });
-  //       }
-  //     );
-  //   }
-
-  render() {
-    return (
-      <div className="container">
-        <h1>Collaborative Code Editor</h1>
-        <h2>Room: {this.state.room}</h2>
-        {/* <div className="change-room-buttons">
-          <button onClick={() => this.handleSwitchRoom()}>+</button>
+const Room = props => {
+  return (
+    <div className="container">
+      <h1>Collaborative Code Editor</h1>
+      <h2>Room: {props.room}</h2>
+      {/* <div className="change-room-buttons">
+          <button onClick={() => handleSwitchRoom()}>+</button>
         </div> */}
-        <TextBox room={this.state.room} />
-      </div>
-    );
-  }
-}
+      <TextBox code={props.code} updateCodeinState={props.updateCodeinState} />
+    </div>
+  );
+};
 
 export default Room;
