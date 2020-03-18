@@ -10,10 +10,7 @@ class App extends Component {
       code: '',
       room: 'roomba'
     };
-    // socket.on('receive code', payload => {
-    //   console.log('received code');
-    //   this.updateCodeFromSockets(payload);
-    // });
+
     this.updateCodeinState = this.updateCodeinState.bind(this);
     this.updateCodeFromSockets = this.updateCodeFromSockets.bind(this);
   }
